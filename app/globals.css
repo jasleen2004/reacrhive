@@ -1,0 +1,30 @@
+@import url('https://fonts.googleapis.com/css2?family=Cinzel:wght@400;700&family=Cormorant+Garamond:wght@300;500;700&family=Orbitron:wght@400;700&family=Press+Start+2P&family=Quicksand:wght@400;600&family=Space+Grotesk:wght@400;500;700&family=Special+Elite&display=swap');
+
+*{
+  margin:0;
+  padding:0;
+  box-sizing:border-box;
+}
+
+html,
+body{
+  overflow-x:hidden;
+}
+
+/* Layout helpers for a cleaner, centered editorial layout */
+.container {
+  max-width: 1100px;
+  margin: 0 auto;
+  padding-left: 16px;
+  padding-right: 16px;
+}
+
+body {
+  -webkit-font-smoothing:antialiased;
+  -moz-osx-font-smoothing:grayscale;
+  color: #111;
+  background: transparent;
+}
+
+/* Utility for larger elegant headings */
+.display-heading { font-family: 'Cormorant Garamond', serif; font-weight: 500; }
