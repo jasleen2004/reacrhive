@@ -1,4 +1,4 @@
-"use client";
+﻿"use client";
 
 import React from "react";
 import { ThemeDropdown } from "./ThemeDropdown";
@@ -19,36 +19,23 @@ export default function Navbar({ active, setActive, theme, setTheme }: Props) {
   ];
 
   return (
-    <nav
-      style={{
-        width: "100%",
-        display: "flex",
-        justifyContent: "center",
-        padding: "14px 0",
-      }}
-    >
+    <nav style={{ position: "sticky", top: 16, zIndex: 50, margin: "0 18px 24px" }}>
       <div
         style={{
-          width: "100%",
-          maxWidth: 1100,
           display: "flex",
           alignItems: "center",
           justifyContent: "space-between",
-          padding: "10px 20px",
-          borderRadius: 12,
-          background: "rgba(255,255,255,0.04)",
-          backdropFilter: "blur(10px)",
+          padding: "16px 24px",
+          borderRadius: 28,
+          background: "rgba(8, 9, 12, 0.74)",
+          border: "1px solid rgba(255,255,255,0.08)",
+          backdropFilter: "blur(20px)",
+          boxShadow: "0 22px 72px rgba(0,0,0,0.22)",
+          maxWidth: 1120,
+          margin: "0 auto",
         }}
       >
-        {/* TABS */}
-        <div
-          style={{
-            display: "flex",
-            gap: 24,
-            flex: 1,
-            justifyContent: "center",
-          }}
-        >
+        <div style={{ display: "flex", gap: 24, alignItems: "center", flex: 1, justifyContent: "center" }}>
           {tabs.map((t) => {
             const isActive = t.key === active;
 
@@ -57,17 +44,15 @@ export default function Navbar({ active, setActive, theme, setTheme }: Props) {
                 key={t.key}
                 onClick={() => setActive(t.key)}
                 style={{
-                  background: "transparent",
+                  background: isActive ? "rgba(214, 179, 111, 0.14)" : "transparent",
                   border: "none",
                   cursor: "pointer",
                   fontSize: 14,
-                  padding: "8px 10px",
-                  borderRadius: 8,
-                  fontWeight: isActive ? 600 : 400,
-                  color: isActive ? "#fff" : "rgba(255,255,255,0.6)",
-                  backgroundColor: isActive
-                    ? "rgba(255,255,255,0.08)"
-                    : "transparent",
+                  padding: "12px 16px",
+                  borderRadius: 999,
+                  fontWeight: isActive ? 700 : 500,
+                  color: isActive ? "#fff" : "rgba(255,255,255,0.72)",
+                  transition: "background 0.24s ease, transform 0.24s ease",
                 }}
               >
                 {t.label}
@@ -76,8 +61,7 @@ export default function Navbar({ active, setActive, theme, setTheme }: Props) {
           })}
         </div>
 
-        {/* THEME */}
-        <div style={{ marginLeft: 20 }}>
+        <div style={{ marginLeft: 18 }}>
           <ThemeDropdown currentTheme={theme} setTheme={setTheme} />
         </div>
       </div>

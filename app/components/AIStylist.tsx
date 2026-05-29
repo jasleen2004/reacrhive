@@ -208,139 +208,125 @@ export default function AIStylist({ onSaveLook }: Props) {
   };
 
   return (
-    <section style={{ padding: "40px 20px", maxWidth: 900, margin: "auto" }}>
-      <h2>AI Styling Agent</h2>
-      <p style={{ opacity: 0.75, maxWidth: 680, margin: "10px auto 24px" }}>
-        Describe the mood or occasion and let the agent build a styled edit. Use prompt keywords like "y2k party," "grunge date," or "futuristic interview."
-      </p>
-
-      <div style={{ display: "grid", gap: 16 }}>
-        <input
-          value={prompt}
-          onChange={(e) => setPrompt(e.target.value)}
-          placeholder="Describe the outfit you want..."
-          style={{ padding: 14, width: "100%", borderRadius: 14, border: "1px solid rgba(255,255,255,0.12)", background: "rgba(255,255,255,0.04)", color: "inherit" }}
-        />
-
-        <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(200px, 1fr))", gap: 16 }}>
+    <section className="section-panel fade-in" style={{ padding: "42px 20px" }}>
+      <div className="glass-panel" style={{ padding: "38px 36px" }}>
+        <div style={{ display: "flex", flexDirection: "column", gap: 24 }}>
           <div>
-            <p style={{ margin: "0 0 6px", opacity: 0.7 }}>Occasion</p>
-            <select value={occasion} onChange={(e) => setOccasion(e.target.value)}>
-              <option value="">Auto detect from prompt</option>
-              {optionList.occasion.map((option) => (
-                <option key={option} value={option}>
-                  {option}
-                </option>
-              ))}
-            </select>
+            <p className="section-title">AI Styling</p>
+            <h2 style={{ fontSize: 32, fontWeight: 600, margin: "0 0 14px", color: "#f9f7f1" }}>
+              Fashion-forward smart edits in a cinematic styling interface.
+            </h2>
+            <p style={{ maxWidth: 730, color: "var(--muted)", lineHeight: 1.9 }}>
+              Describe a look, set the mood, and watch the AI create runway-inspired outfit guidance with premium editorial detail.
+            </p>
           </div>
 
-          <div>
-            <p style={{ margin: "0 0 6px", opacity: 0.7 }}>Style</p>
-            <select value={style} onChange={(e) => setStyle(e.target.value)}>
-              <option value="">Auto detect from prompt</option>
-              {optionList.style.map((option) => (
-                <option key={option} value={option}>
-                  {option}
-                </option>
+          <div style={{ display: "grid", gap: 18 }}>
+            <input
+              className="input-field"
+              value={prompt}
+              onChange={(e) => setPrompt(e.target.value)}
+              placeholder="e.g. futuristic date night with elegant layering"
+            />
+
+            <div className="feature-grid" style={{ gridTemplateColumns: "repeat(auto-fit, minmax(220px, 1fr))" }}>
+              {[
+                { label: "Occasion", value: occasion, setter: setOccasion, options: optionList.occasion },
+                { label: "Style", value: style, setter: setStyle, options: optionList.style },
+                { label: "Intensity", value: intensity, setter: setIntensity, options: optionList.intensity },
+                { label: "Mood", value: mood, setter: setMood, options: optionList.mood },
+              ].map((field) => (
+                <div key={field.label} style={{ display: "flex", flexDirection: "column", gap: 8 }}>
+                  <p style={{ margin: 0, color: "var(--muted)", fontSize: 13, letterSpacing: "0.12em", textTransform: "uppercase" }}>
+                    {field.label}
+                  </p>
+                  <select
+                    className="select-field"
+                    value={field.value}
+                    onChange={(e) => field.setter(e.target.value)}
+                  >
+                    <option value="">Auto detect from prompt</option>
+                    {field.options.map((option) => (
+                      <option key={option} value={option}>
+                        {option}
+                      </option>
+                    ))}
+                  </select>
+                </div>
               ))}
-            </select>
+            </div>
+
+            <div className="action-row">
+              <button className="premium-button" onClick={handleGenerate}>
+                Generate
+              </button>
+              <button className="premium-button secondary-button" onClick={handleReset}>
+                Reset
+              </button>
+            </div>
+
+            {feedback && <p style={{ color: "#d9d9d9", opacity: 0.88 }}>{feedback}</p>}
+
+            {loading && <p style={{ color: "var(--muted)" }}>Thinking through the edit...</p>}
           </div>
 
-          <div>
-            <p style={{ margin: "0 0 6px", opacity: 0.7 }}>Intensity</p>
-            <select value={intensity} onChange={(e) => setIntensity(e.target.value)}>
-              <option value="">Auto detect from prompt</option>
-              {optionList.intensity.map((option) => (
-                <option key={option} value={option}>
-                  {option}
-                </option>
-              ))}
-            </select>
-          </div>
-
-          <div>
-            <p style={{ margin: "0 0 6px", opacity: 0.7 }}>Mood</p>
-            <select value={mood} onChange={(e) => setMood(e.target.value)}>
-              <option value="">Auto detect from prompt</option>
-              {optionList.mood.map((option) => (
-                <option key={option} value={option}>
-                  {option}
-                </option>
-              ))}
-            </select>
-          </div>
-        </div>
-
-        <div style={{ display: "flex", gap: 12, flexWrap: "wrap" }}>
-          <button onClick={handleGenerate} style={{ padding: "13px 20px", minWidth: 120 }}>
-            Generate
-          </button>
-          <button onClick={handleReset} style={{ padding: "13px 20px", minWidth: 120 }}>
-            Reset
-          </button>
-        </div>
-
-        {feedback && <p style={{ color: "#d9d9d9", opacity: 0.85 }}>{feedback}</p>}
-
-        {loading && <p>Thinking through the edit...</p>}
-
-        {result && (
-          <div style={{ marginTop: 24, padding: 24, borderRadius: 18, background: "rgba(255,255,255,0.04)", border: "1px solid rgba(255,255,255,0.08)" }}>
-            <h3 style={{ marginTop: 0 }}>{result.title}</h3>
-            <p style={{ opacity: 0.8 }}>{result.description}</p>
-
-            <div style={{ display: "grid", gap: 16, marginTop: 20 }}>
-              <div>
-                <h4 style={{ marginBottom: 10 }}>Palette</h4>
+          {result && (
+            <div className="glass-card" style={{ marginTop: 12, padding: 28 }}>
+              <div style={{ display: "flex", justifyContent: "space-between", alignItems: "flex-start", flexWrap: "wrap", gap: 18 }}>
+                <div>
+                  <h3 style={{ margin: 0, fontSize: 24, color: "#f9f7f1" }}>{result.title}</h3>
+                  <p style={{ marginTop: 12, color: "var(--muted)", lineHeight: 1.85 }}>{result.description}</p>
+                </div>
                 <div style={{ display: "flex", gap: 10, flexWrap: "wrap" }}>
                   {result.palette.map((color) => (
-                    <span key={color} style={{ padding: "8px 12px", borderRadius: 999, background: "rgba(255,255,255,0.08)", fontSize: 12 }}>
+                    <span key={color} style={{ padding: "8px 14px", borderRadius: 999, background: "rgba(255,255,255,0.08)", color: "#fff", fontSize: 12 }}>
                       {color}
                     </span>
                   ))}
                 </div>
               </div>
 
-              <div>
-                <h4 style={{ marginBottom: 10 }}>Fabric</h4>
-                <ul style={{ margin: 0, paddingLeft: 20 }}>
-                  {result.fabric.map((fabric) => (
-                    <li key={fabric}>{fabric}</li>
-                  ))}
-                </ul>
+              <div style={{ display: "grid", gap: 20, marginTop: 24 }}>
+                <div>
+                  <h4 style={{ marginBottom: 10, color: "#f9f7f1" }}>Fabric</h4>
+                  <ul style={{ margin: 0, paddingLeft: 20, color: "var(--muted)", lineHeight: 1.8 }}>
+                    {result.fabric.map((fabric) => (
+                      <li key={fabric}>{fabric}</li>
+                    ))}
+                  </ul>
+                </div>
+
+                <div>
+                  <h4 style={{ marginBottom: 10, color: "#f9f7f1" }}>How to style</h4>
+                  <ul style={{ margin: 0, paddingLeft: 20, color: "var(--muted)", lineHeight: 1.8 }}>
+                    {result.howToStyle.map((tip) => (
+                      <li key={tip}>{tip}</li>
+                    ))}
+                  </ul>
+                </div>
+
+                <div>
+                  <h4 style={{ marginBottom: 10, color: "#f9f7f1" }}>Key pieces</h4>
+                  <ul style={{ margin: 0, paddingLeft: 20, color: "var(--muted)", lineHeight: 1.8 }}>
+                    {result.items.map((item) => (
+                      <li key={item.name}>
+                        <strong>{item.name}</strong> — {item.detail}
+                      </li>
+                    ))}
+                  </ul>
+                </div>
               </div>
 
-              <div>
-                <h4 style={{ marginBottom: 10 }}>How to style</h4>
-                <ul style={{ margin: 0, paddingLeft: 20 }}>
-                  {result.howToStyle.map((tip) => (
-                    <li key={tip}>{tip}</li>
-                  ))}
-                </ul>
-              </div>
+              <p style={{ marginTop: 24, color: "rgba(245,243,238,0.75)", lineHeight: 1.95 }}>{result.editorial}</p>
 
-              <div>
-                <h4 style={{ marginBottom: 10 }}>Key pieces</h4>
-                <ul style={{ margin: 0, paddingLeft: 20 }}>
-                  {result.items.map((item) => (
-                    <li key={item.name}>
-                      <strong>{item.name}</strong> — {item.detail}
-                    </li>
-                  ))}
-                </ul>
-              </div>
+              {onSaveLook && (
+                <button className="premium-button" onClick={handleSave} style={{ marginTop: 18 }}>
+                  Save Look
+                </button>
+              )}
             </div>
-
-            <p style={{ marginTop: 20, opacity: 0.75 }}>{result.editorial}</p>
-
-            {onSaveLook && (
-              <button onClick={handleSave} style={{ marginTop: 16, padding: "12px 18px" }}>
-                Save Look
-              </button>
-            )}
-          </div>
-        )}
+          )}
+        </div>
       </div>
     </section>
   );

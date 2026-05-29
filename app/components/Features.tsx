@@ -1,28 +1,41 @@
-"use client";
+﻿"use client";
 
 import React from "react";
 
 export function Features() {
   const items = [
-    { title: "AI Outfit Intelligence", desc: "Generates editorial-ready outfits tuned to occasion, mood and personal aesthetics." },
-    { title: "Digital Wardrobe", desc: "Organize your pieces so styling becomes effortless and intentional." },
-    { title: "Circular Focus", desc: "Encourage reuse and thoughtful curation over endless consumption." },
-    { title: "Personal Aesthetics", desc: "Switch and refine visual identities from minimal to editorial to experimental." },
-    { title: "Mood-Based Styling", desc: "Outfits adapt to real-life contexts: work, casual, date, events, travel." },
-    { title: "Adaptive Learning", desc: "The platform evolves with your preferences to refine personalization over time." },
+    { title: "AI Outfit Intelligence", desc: "Premium styling that anticipates your mood, occasion, and identity with editorial precision." },
+    { title: "Digital Wardrobe", desc: "A refined closet experience that turns every piece into a curated asset for your archive." },
+    { title: "Aesthetic Engine", desc: "Switch between stylish identities with immersive visual guidance tailored to your brand." },
+    { title: "Context-Aware Styling", desc: "Outfit recommendations adapt to events, workdays, and after-hours rituals." },
+    { title: "Sustainable Fashion Logic", desc: "Designed to reduce waste with smarter styling and greater wardrobe longevity." },
+    { title: "Personalized Style Learning", desc: "The platform evolves with you to make each recommendation more confident and refined." },
   ];
 
   return (
-    <section style={{ padding: "0 18px", maxWidth: 1100, margin: "0 auto", textAlign: "center" }}>
-      <h2 style={{ fontSize: 26, fontWeight: 500, marginBottom: 40, letterSpacing: 0.4, opacity: 0.95 }}>Features</h2>
+    <section className="section-panel fade-in" style={{ padding: "50px 18px" }}>
+      <div style={{ maxWidth: 1120, margin: "0 auto" }}>
+        <p className="section-title">Feature Highlights</p>
+        <h2 style={{ fontSize: 38, fontWeight: 600, margin: "0 0 34px", letterSpacing: 0.02, color: "#f9f7f1" }}>
+          Premium tools for fashion, identity, and sustainable wardrobe intelligence.
+        </h2>
 
-      <div style={{ display: "grid", gridTemplateColumns: "repeat(3, 1fr)", gap: 36 }}>
-        {items.map((it, i) => (
-          <div key={i} style={{ textAlign: "left", padding: "0 8px" }}>
-            <h3 style={{ marginTop: 0, marginBottom: 12, fontSize: 16, fontWeight: 500, opacity: 0.95 }}>{it.title}</h3>
-            <p style={{ opacity: 0.75, lineHeight: 1.7, fontSize: 14, margin: 0 }}>{it.desc}</p>
-          </div>
-        ))}
+        <div className="feature-grid">
+          {items.map((item, index) => (
+            <div key={index} className="glass-card fade-in" style={{ minHeight: 220, display: "flex", flexDirection: "column", justifyContent: "space-between" }}>
+              <div>
+                <p style={{ margin: 0, fontSize: 13, letterSpacing: 0.3, textTransform: "uppercase", opacity: 0.68 }}>
+                  {index + 1 < 10 ? `0${index + 1}` : index + 1}
+                </p>
+                <h3 style={{ margin: "14px 0 16px", fontSize: 20, lineHeight: 1.3, color: "#f8f6f1" }}>{item.title}</h3>
+                <p style={{ margin: 0, color: "var(--muted)", lineHeight: 1.8 }}>{item.desc}</p>
+              </div>
+              <div style={{ marginTop: 24, color: "rgba(214,179,111,0.85)", fontSize: 13, letterSpacing: 0.14 }}>
+                Explore more
+              </div>
+            </div>
+          ))}
+        </div>
       </div>
     </section>
   );

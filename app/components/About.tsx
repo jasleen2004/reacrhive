@@ -1,23 +1,34 @@
-"use client";
+﻿"use client";
 
 import React from "react";
 
 export function About() {
   return (
-    <section style={{ padding: "0 18px", maxWidth: 700, margin: "0 auto", textAlign: "center", color: "inherit" }}>
-      <h2 style={{ fontSize: 26, fontWeight: 500, marginBottom: 32, letterSpacing: 0.4, opacity: 0.95 }}>About</h2>
+    <section className="section-panel fade-in" style={{ padding: "60px 18px" }}>
+      <div className="glass-panel" style={{ padding: "48px 40px" }}>
+        <p className="section-title">About ReArchive</p>
+        <h2 style={{ fontSize: 38, fontWeight: 600, margin: "0 0 28px", letterSpacing: 0.02, color: "#f9f7f1" }}>
+          A premium fashion-tech platform for AI styling, identity and sustainability.
+        </h2>
 
-      <p style={{ opacity: 0.85, lineHeight: 1.9, marginBottom: 20, fontSize: 15 }}>
-        ReArchive brings together AI-powered styling and a digital wardrobe to help you make considered fashion choices. Our styling engine crafts complete, editorial looks tailored to your mood, occasion, and personal aesthetics — not trends.
-      </p>
+        <div style={{ display: "grid", gap: 22, color: "var(--muted)", fontSize: 16, lineHeight: 1.9 }}>
+          <p>
+            ReArchive transforms styling into a finely curated editorial experience. Our AI-powered stylist crafts looks that feel luxury runway-ready while honoring your own mood, occasion and aesthetic identity.
+          </p>
 
-      <p style={{ opacity: 0.80, lineHeight: 1.9, marginBottom: 20, fontSize: 15 }}>
-        At the heart of ReArchive is a circular fashion vision: maximize what you already own, reduce unnecessary consumption, and extend the life of garments through smarter styling and curated rental partnerships.
-      </p>
+          <p>
+            Your digital wardrobe becomes an elevated archive. Organize pieces, revisit favorites, and discover styling combinations that maximize your closet’s creative potential with thoughtful guidance.
+          </p>
 
-      <p style={{ opacity: 0.80, lineHeight: 1.9, fontSize: 15 }}>
-        The platform learns from your choices, evolves with your identity, and offers quiet, editorial guidance — empowering confident dressing that feels personal, sustainable, and intentional.
-      </p>
+          <p>
+            This is styling for modern identity, inspired by Gen Z culture and premium fashion direction. The platform learns from your choices and evolves with you, helping every outfit feel intentional.
+          </p>
+
+          <p>
+            Sustainability is built into the experience: smart wardrobe curation reduces waste, encourages reuse and supports more conscious fashion decisions with every recommendation.
+          </p>
+        </div>
+      </div>
     </section>
   );
 }

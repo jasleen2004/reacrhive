@@ -72,10 +72,21 @@ export default function Home() {
 
       {/* AI SECTION */}
       {section === "ai" && (
-        <section style={{ maxWidth: 900, margin: "40px auto" }}>
-          <h2>AI Styling Engine</h2>
+        <section className="section-panel fade-in" style={{ maxWidth: 980, margin: "40px auto 80px", padding: "0 18px" }}>
+          <div className="glass-panel" style={{ padding: "40px 36px" }}>
+            <div style={{ maxWidth: 760, margin: "0 auto 32px" }}>
+              <p className="section-title">AI Styling</p>
+              <h2 style={{ fontSize: 34, fontWeight: 600, margin: 0, color: "#f9f7f1", lineHeight: 1.08 }}>
+                Fashion-forward outfit direction for every modern moment.
+              </h2>
+              <p style={{ marginTop: 16, color: "var(--muted)", lineHeight: 1.85 }}>
+                Use the prompt field below to generate premium outfit guidance from your personalized ReArchive styling system.
+                The AI stylist blends futuristic runway energy with editorial polish.
+              </p>
+            </div>
 
-          <AIStylist onSaveLook={handleSaveLook} />
+            <AIStylist onSaveLook={handleSaveLook} />
+          </div>
         </section>
       )}
 

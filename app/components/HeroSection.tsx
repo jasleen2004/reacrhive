@@ -4,23 +4,18 @@ import React from 'react';
 
 export function HeroSection() {
   return (
-    <div style={{ minHeight: 'calc(100vh - 84px)', display: 'flex', alignItems: 'center', justifyContent: 'center', padding: '6rem 1.5rem', position: 'relative' }}>
-      <div className="relative z-10 text-center">
-        <h1 className="display-heading" style={{
-          margin: 0,
-          fontFamily: "Cormorant Garamond, serif",
-          fontWeight: 700,
-          fontSize: 'clamp(48px, 9vw, 120px)',
-          lineHeight: 1,
-          letterSpacing: '0.08em',
-        }}>
-          ReArchive
-        </h1>
+    <section className="hero-section fade-in">
+      <div className="hero-glow hero-glow-1" />
+      <div className="hero-glow hero-glow-2" />
 
-        <p style={{ maxWidth: 760, margin: '20px auto 0', opacity: 0.75, fontSize: 16, lineHeight: 1.6 }}>
-          AI-powered fashion styling, digital wardrobe, and identity-driven aesthetics.
+      <div className="hero-content">
+        <p className="section-title">Luxury Editorial AI</p>
+        <h1 className="hero-heading">ReArchive</h1>
+        <p className="hero-copy">
+          AI-powered digital wardrobe and circular fashion platform. Discover personalized styling, curated visuals,
+          and sustainable identity-driven aesthetics for the next generation of wardrobe intelligence.
         </p>
       </div>
-    </div>
+    </section>
   );
 }
