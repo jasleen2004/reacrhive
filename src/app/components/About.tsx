@@ -7,7 +7,7 @@ export function About() {
     <section className="section-panel fade-in" style={{ padding: "60px 18px" }}>
       <div className="glass-panel" style={{ padding: "48px 40px" }}>
         <p className="section-title">About ReArchive</p>
-        <h2 style={{ fontSize: 38, fontWeight: 600, margin: "0 0 28px", letterSpacing: 0.02, color: "#f9f7f1" }}>
+        <h2 style={{ fontSize: 38, fontWeight: 600, margin: "0 0 28px", letterSpacing: 0.02, color: "var(--text)" }}>
           A premium fashion-tech platform for AI styling, identity and sustainability.
         </h2>
 

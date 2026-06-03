@@ -16,7 +16,7 @@ export function Features() {
     <section className="section-panel fade-in" style={{ padding: "50px 18px" }}>
       <div style={{ maxWidth: 1120, margin: "0 auto" }}>
         <p className="section-title">Feature Highlights</p>
-        <h2 style={{ fontSize: 38, fontWeight: 600, margin: "0 0 34px", letterSpacing: 0.02, color: "#f9f7f1" }}>
+        <h2 style={{ fontSize: 38, fontWeight: 600, margin: "0 0 34px", letterSpacing: 0.02, color: "var(--text)" }}>
           Premium tools for fashion, identity, and sustainable wardrobe intelligence.
         </h2>
 
@@ -27,7 +27,7 @@ export function Features() {
                 <p style={{ margin: 0, fontSize: 13, letterSpacing: 0.3, textTransform: "uppercase", opacity: 0.68 }}>
                   {index + 1 < 10 ? `0${index + 1}` : index + 1}
                 </p>
-                <h3 style={{ margin: "14px 0 16px", fontSize: 20, lineHeight: 1.3, color: "#f8f6f1" }}>{item.title}</h3>
+                <h3 style={{ margin: "14px 0 16px", fontSize: 20, lineHeight: 1.3, color: "var(--text)" }}>{item.title}</h3>
                 <p style={{ margin: 0, color: "var(--muted)", lineHeight: 1.8 }}>{item.desc}</p>
               </div>
               <div style={{ marginTop: 24, color: "rgba(214,179,111,0.85)", fontSize: 13, letterSpacing: 0.14 }}>

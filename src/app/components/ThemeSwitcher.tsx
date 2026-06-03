@@ -1,6 +1,6 @@
 'use client';
 
-import { useTheme } from '@/app/providers';
+import { useTheme } from '@/src/app/providers';
 import { Moon, Sun } from 'lucide-react';
 
 export function ThemeSwitcher() {
