@@ -49,7 +49,7 @@ export const defaultConfig: StudioConfig = {
   navColor: "rgba(10, 11, 14, 0.82)",
   searchColor: "rgba(255,255,255,0.08)",
   hoverEffectColor: "rgba(214, 179, 111, 0.18)",
-  fontFamily: "Inter, sans-serif",
+  fontFamily: "Quicksand, sans-serif",
   fontSize: 16,
   fontWeight: 400,
   fontStyle: "normal",
@@ -60,16 +60,7 @@ export const defaultConfig: StudioConfig = {
   cursor: "default",
 };
 
-const presetPalettes = [
-  { name: "Quiet Luxury", config: { ...defaultConfig, backgroundColor: "#efe6d8", textColor: "#3d2e1f", headingColor: "#3d2e1f", navTextColor: "#3d2e1f", buttonColor: "#c9a567", accentColor: "#b78b4c", cardColor: "rgba(255,255,255,0.72)", borderColor: "rgba(94, 74, 41, 0.18)", navColor: "rgba(255,255,255,0.74)", searchColor: "rgba(255,255,255,0.68)", hoverEffectColor: "rgba(201, 165, 103, 0.16)", fontFamily: "Cormorant Garamond, serif", wallpaper: "luxury" } },
-  { name: "Cyber Future", config: { ...defaultConfig, backgroundColor: "#040816", textColor: "#8ffcff", headingColor: "#8ffcff", navTextColor: "#8ffcff", buttonColor: "#5c7cff", accentColor: "#ff4fd8", cardColor: "rgba(10, 18, 42, 0.88)", borderColor: "rgba(143, 252, 255, 0.20)", navColor: "rgba(4, 8, 22, 0.92)", searchColor: "rgba(17, 28, 58, 0.94)", hoverEffectColor: "rgba(92, 124, 255, 0.18)", fontFamily: "Orbitron, sans-serif", wallpaper: "holographic" } },
-  { name: "Coquette", config: { ...defaultConfig, backgroundColor: "#fff4f8", textColor: "#7a465f", headingColor: "#7a465f", navTextColor: "#7a465f", buttonColor: "#ffb6d5", accentColor: "#ff8fc2", cardColor: "rgba(255,255,255,0.82)", borderColor: "rgba(122, 70, 95, 0.18)", navColor: "rgba(255,255,255,0.88)", searchColor: "rgba(255,240,247,0.92)", hoverEffectColor: "rgba(255, 182, 213, 0.22)", fontFamily: "Pacifico, cursive", wallpaper: "floral" } },
-  { name: "Dark Academia", config: { ...defaultConfig, backgroundColor: "#24170f", textColor: "#efe0cb", headingColor: "#efe0cb", navTextColor: "#efe0cb", buttonColor: "#8d5b3b", accentColor: "#b77f52", cardColor: "rgba(49, 35, 24, 0.86)", borderColor: "rgba(255,255,255,0.12)", navColor: "rgba(32, 24, 17, 0.92)", searchColor: "rgba(59, 42, 29, 0.92)", hoverEffectColor: "rgba(139, 91, 59, 0.16)", fontFamily: "Lora, serif", wallpaper: "vintage" } },
-];
-
-const fontOptions = [
-  "Inter", "Poppins", "Montserrat", "Playfair Display", "Lora", "Roboto", "Open Sans", "Merriweather", "Bebas Neue", "Raleway", "Outfit", "DM Sans", "Space Grotesk", "Orbitron", "Cinzel", "Dancing Script", "Pacifico", "Cormorant Garamond",
-];
+const presetPalettes: { name: string; config: StudioConfig }[] = [];
 
 const decorationCatalog = [
   { category: "Nature", items: ["🌸 Flowers", "🌹 Roses", "🌼 Daisies", "🌻 Sunflowers", "🍃 Leaves", "🦋 Butterflies", "⭐ Stars"] },
@@ -78,8 +69,15 @@ const decorationCatalog = [
   { category: "Cyber", items: ["⚡ Neon Circles", "💫 Holographic", "🔷 Neon Rings", "📡 Data Nodes", "🧬 AI Symbols"] },
 ];
 
-export default function MySpaceStudio({ open, setOpen, config, setConfig, decorations, setDecorations }: { open: boolean; setOpen: (value: boolean) => void; config: StudioConfig; setConfig: (value: StudioConfig) => void; decorations: DecorationItem[]; setDecorations: React.Dispatch<React.SetStateAction<DecorationItem[]>>; }) {
-  const [profileName, setProfileName] = useState("My Quiet Luxury");
+export default function MySpaceStudio({ open, setOpen, config, setConfig, decorations, setDecorations }: {
+  open: boolean;
+  setOpen: (value: boolean) => void;
+  config: StudioConfig;
+  setConfig: (value: StudioConfig) => void;
+  decorations: DecorationItem[];
+  setDecorations: React.Dispatch<React.SetStateAction<DecorationItem[]>>;
+}) {
+  const [profileName, setProfileName] = useState("My Profile");
   const [profiles, setProfiles] = useState<Profile[]>([]);
   const dragRef = useRef<{ id: string; offsetX: number; offsetY: number } | null>(null);
 
@@ -91,7 +89,6 @@ export default function MySpaceStudio({ open, setOpen, config, setConfig, decora
   useEffect(() => {
     localStorage.setItem("my-space-profiles", JSON.stringify(profiles));
   }, [profiles]);
-
 
   const liveBackground = useMemo(() => {
     switch (config.wallpaper) {
@@ -106,18 +103,13 @@ export default function MySpaceStudio({ open, setOpen, config, setConfig, decora
     }
   }, [config]);
 
-  const applyPreset = (preset: { config: StudioConfig }) => setConfig({ ...preset.config });
-
   const updateConfig = (key: keyof StudioConfig, value: string | number) => setConfig({ ...config, [key]: value });
-
   const saveProfile = () => {
     if (!profileName.trim()) return;
-    const next = [...profiles.filter((entry) => entry.name !== profileName), { name: profileName, config: { ...config } }];
+    const next = [...profiles.filter((e) => e.name !== profileName), { name: profileName, config: { ...config } }];
     setProfiles(next);
   };
-
   const loadProfile = (entry: Profile) => setConfig({ ...entry.config });
-
   const addDecoration = (label: string) => {
     const piece = label.split(" ")[0] || "✨";
     setDecorations((prev) => [
@@ -125,9 +117,7 @@ export default function MySpaceStudio({ open, setOpen, config, setConfig, decora
       { id: crypto.randomUUID(), name: label, emoji: piece, category: "Studio", x: 90 + prev.length * 28, y: 120 + prev.length * 28, rotate: (prev.length % 4) * 8 },
     ]);
   };
-
   const removeDecoration = (id: string) => setDecorations((prev) => prev.filter((item) => item.id !== id));
-
   const handlePointerDown = (event: React.MouseEvent<HTMLDivElement>, decoration: DecorationItem) => {
     event.preventDefault();
     dragRef.current = { id: decoration.id, offsetX: event.clientX - decoration.x, offsetY: event.clientY - decoration.y };
@@ -147,158 +137,102 @@ export default function MySpaceStudio({ open, setOpen, config, setConfig, decora
     };
   }, []);
 
-  const exportProfile = () => {
-    const blob = new Blob([JSON.stringify({ config, decorations, profiles }, null, 2)], { type: "application/json" });
-    const url = URL.createObjectURL(blob);
-    const a = document.createElement("a");
-    a.href = url;
-    a.download = "rearchive-space-studio.json";
-    a.click();
-    URL.revokeObjectURL(url);
-  };
-
-  const importProfile = async (event: React.ChangeEvent<HTMLInputElement>) => {
-    const file = event.target.files?.[0];
-    if (!file) return;
-    const text = await file.text();
-    const imported = JSON.parse(text);
-    if (imported.config) setConfig(imported.config);
-    if (imported.decorations) setDecorations(imported.decorations);
-    if (imported.profiles) setProfiles(imported.profiles);
-    event.target.value = "";
-  };
+  if (!open) return null;
 
   return (
-    <>
-      {open && (
-        <aside style={{ position: "fixed", right: 18, bottom: 88, width: 360, maxHeight: "82vh", overflowY: "auto", zIndex: 80, borderRadius: 28, border: "1px solid " + config.borderColor, background: config.cardColor, color: config.textColor, boxShadow: "0 26px 90px rgba(0,0,0,0.35)", padding: 18, backdropFilter: "blur(22px)" }}>
-          <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginBottom: 12 }}>
-            <div>
-              <div style={{ fontSize: 12, textTransform: "uppercase", letterSpacing: 0.25, opacity: 0.78 }}>My Space Studio</div>
-              <h3 style={{ fontSize: 18, margin: "4px 0 0" }}>Customize your room</h3>
-            </div>
-            <button onClick={() => setOpen(false)} style={{ border: "1px solid " + config.borderColor, background: "rgba(255,255,255,0.04)", color: config.textColor, borderRadius: 999, padding: "6px 10px" }}>Close</button>
-          </div>
+    <aside style={{ position: "fixed", right: 18, bottom: 88, width: 340, maxHeight: "80vh", overflowY: "auto", zIndex: 80, borderRadius: 24, border: "1px solid " + config.borderColor, background: config.cardColor, color: config.textColor, boxShadow: "0 26px 90px rgba(0,0,0,0.35)", padding: 18, backdropFilter: "blur(22px)" }}>
+      
+      {/* HEADER */}
+      <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginBottom: 16 }}>
+        <h3 style={{ fontSize: 16, margin: 0, fontWeight: 600 }}>✦ My Space Studio</h3>
+        <button onClick={() => setOpen(false)} style={{ border: "1px solid " + config.borderColor, background: "rgba(255,255,255,0.04)", color: config.textColor, borderRadius: 999, padding: "5px 10px", fontSize: 12, cursor: "pointer" }}>Close</button>
+      </div>
 
-          <div style={{ display: "grid", gap: 10, marginBottom: 12 }}>
-            {presetPalettes.map((preset) => (
-              <button key={preset.name} onClick={() => applyPreset(preset)} style={{ textAlign: "left", padding: "10px 12px", borderRadius: 16, background: "rgba(255,255,255,0.05)", border: "1px solid " + config.borderColor, color: config.textColor }}>
-                <strong>{preset.name}</strong>
-              </button>
-            ))}
-          </div>
+      {/* BACKGROUND COLOR — medium to dark range only */}
+      <div style={{ marginBottom: 14 }}>
+        <p style={{ fontSize: 11, textTransform: "uppercase", letterSpacing: "0.2em", opacity: 0.5, margin: "0 0 10px" }}>Background</p>
+        <div style={{ display: "grid", gridTemplateColumns: "repeat(5, 1fr)", gap: 6, marginBottom: 8 }}>
+          {[
+            "#09090f", "#0f0f1a", "#1a1209", "#0a1a0f", "#0d0a1a",
+            "#1c1409", "#1a0d0d", "#0a141a", "#141414", "#1a1a0a",
+            "#2a1f0e", "#1a2a1a", "#0e1a2a", "#2a0e1a", "#1a1a2a",
+            "#3d2a14", "#142a14", "#14243d", "#3d1428", "#2a2a3d",
+          ].map((color) => (
+            <button
+              key={color}
+              onClick={() => updateConfig("backgroundColor", color)}
+              style={{
+                width: "100%",
+                aspectRatio: "1",
+                borderRadius: 8,
+                background: color,
+                border: config.backgroundColor === color ? "2px solid rgba(214,179,111,0.8)" : "1px solid rgba(255,255,255,0.1)",
+                cursor: "pointer",
+                transition: "transform 0.15s ease",
+              }}
+              onMouseEnter={e => e.currentTarget.style.transform = "scale(1.1)"}
+              onMouseLeave={e => e.currentTarget.style.transform = "scale(1)"}
+              title={color}
+            />
+          ))}
+        </div>
+        <p style={{ fontSize: 10, opacity: 0.35, margin: 0, letterSpacing: "0.05em" }}>Custom: <input type="color" value={config.backgroundColor} onChange={(e) => updateConfig("backgroundColor", e.target.value)} style={{ width: 32, height: 20, borderRadius: 4, border: "none", background: "transparent", cursor: "pointer", verticalAlign: "middle" }} /></p>
+      </div>
 
-          <div style={{ display: "grid", gap: 10 }}>
-            <label style={{ display: "grid", gap: 4, fontSize: 12, textTransform: "uppercase", letterSpacing: 0.2 }}>
-              Background color
-              <input type="color" value={config.backgroundColor} onChange={(e) => updateConfig("backgroundColor", e.target.value)} style={{ width: "100%", borderRadius: 10, border: "1px solid " + config.borderColor, background: "transparent", padding: 4 }} />
-            </label>
-            <label style={{ display: "grid", gap: 4, fontSize: 12, textTransform: "uppercase", letterSpacing: 0.2 }}>
-              Main heading color
-              <input type="color" value={config.headingColor} onChange={(e) => updateConfig("headingColor", e.target.value)} style={{ width: "100%", borderRadius: 10, border: "1px solid " + config.borderColor, background: "transparent", padding: 4 }} />
-            </label>
-            <label style={{ display: "grid", gap: 4, fontSize: 12, textTransform: "uppercase", letterSpacing: 0.2 }}>
-              Navigation text color
-              <input type="color" value={config.navTextColor} onChange={(e) => updateConfig("navTextColor", e.target.value)} style={{ width: "100%", borderRadius: 10, border: "1px solid " + config.borderColor, background: "transparent", padding: 4 }} />
-            </label>
-            <label style={{ display: "grid", gap: 4, fontSize: 12, textTransform: "uppercase", letterSpacing: 0.2 }}>
-              Content text color
-              <input type="color" value={config.textColor} onChange={(e) => updateConfig("textColor", e.target.value)} style={{ width: "100%", borderRadius: 10, border: "1px solid " + config.borderColor, background: "transparent", padding: 4 }} />
-            </label>
-            <label style={{ display: "grid", gap: 4, fontSize: 12, textTransform: "uppercase", letterSpacing: 0.2 }}>
-              Button color
-              <input type="color" value={config.buttonColor} onChange={(e) => updateConfig("buttonColor", e.target.value)} style={{ width: "100%", borderRadius: 10, border: "1px solid " + config.borderColor, background: "transparent", padding: 4 }} />
-            </label>
-            <label style={{ display: "grid", gap: 4, fontSize: 12, textTransform: "uppercase", letterSpacing: 0.2 }}>
-              Accent color
-              <input type="color" value={config.accentColor} onChange={(e) => updateConfig("accentColor", e.target.value)} style={{ width: "100%", borderRadius: 10, border: "1px solid " + config.borderColor, background: "transparent", padding: 4 }} />
-            </label>
-          </div>
+      {/* WALLPAPER */}
+      <div style={{ marginBottom: 14 }}>
+        <p style={{ fontSize: 11, textTransform: "uppercase", letterSpacing: "0.2em", opacity: 0.5, margin: "0 0 8px" }}>Wallpaper</p>
+        <select value={config.wallpaper} onChange={(e) => updateConfig("wallpaper", e.target.value)} style={{ width: "100%", borderRadius: 10, border: "1px solid " + config.borderColor, background: "rgba(255,255,255,0.04)", color: config.textColor, padding: "10px 12px", fontSize: 13 }}>
+          {['solid', 'gradient', 'luxury', 'marble', 'satin', 'silk', 'glass', 'holographic', 'cyberpunk', 'floral', 'vintage', 'fashion'].map((o) => (
+            <option key={o} value={o}>{o.charAt(0).toUpperCase() + o.slice(1)}</option>
+          ))}
+        </select>
+      </div>
 
-          <div style={{ marginTop: 12, display: "grid", gap: 8 }}>
-            <label style={{ fontSize: 12, textTransform: "uppercase", letterSpacing: 0.2 }}>Font family</label>
-            <select value={config.fontFamily} onChange={(e) => updateConfig("fontFamily", e.target.value)} style={{ width: "100%", borderRadius: 12, border: "1px solid " + config.borderColor, background: "rgba(255,255,255,0.04)", color: config.textColor, padding: "10px 12px" }}>
-              {fontOptions.map((font) => <option key={font} value={font + ", sans-serif"}>{font}</option>)}
-            </select>
-            <div style={{ display: "grid", gap: 6 }}>
-              <label style={{ fontSize: 12, textTransform: "uppercase", letterSpacing: 0.2 }}>Font size</label>
-              <input type="range" min="12" max="24" value={config.fontSize} onChange={(e) => updateConfig("fontSize", Number(e.target.value))} />
-              <div style={{ display: "flex", gap: 8, flexWrap: "wrap" }}>
-                <button onClick={() => updateConfig("fontSize", Math.max(12, config.fontSize - 1))} style={chipStyle(config)}>A-</button>
-                <button onClick={() => updateConfig("fontSize", Math.min(24, config.fontSize + 1))} style={chipStyle(config)}>A+</button>
-                <button onClick={() => updateConfig("fontWeight", config.fontWeight === 700 ? 400 : 700)} style={chipStyle(config)}>{config.fontWeight === 700 ? "Remove bold" : "Bold"}</button>
-                <button onClick={() => updateConfig("fontStyle", config.fontStyle === "italic" ? "normal" : "italic")} style={chipStyle(config)}>{config.fontStyle === "italic" ? "Remove italic" : "Italic"}</button>
-                <button onClick={() => updateConfig("textDecoration", config.textDecoration === "underline" ? "none" : "underline")} style={chipStyle(config)}>{config.textDecoration === "underline" ? "Remove underline" : "Underline"}</button>
-              </div>
-            </div>
-          </div>
-
-          <div style={{ marginTop: 12, display: "grid", gap: 8 }}>
-            <label style={{ fontSize: 12, textTransform: "uppercase", letterSpacing: 0.2 }}>Wallpaper style</label>
-            <select value={config.wallpaper} onChange={(e) => updateConfig("wallpaper", e.target.value)} style={{ width: "100%", borderRadius: 12, border: "1px solid " + config.borderColor, background: "rgba(255,255,255,0.04)", color: config.textColor, padding: "10px 12px" }}>
-              {['solid', 'gradient', 'luxury', 'marble', 'satin', 'silk', 'glass', 'holographic', 'cyberpunk', 'floral', 'vintage', 'fashion'].map((option) => <option key={option} value={option}>{option}</option>)}
-            </select>
-            <div style={{ fontSize: 12, opacity: 0.8 }}>Tip: your wallpaper and palette updates stream instantly.</div>
-          </div>
-
-          <div style={{ marginTop: 12 }}>
-            <div style={{ fontSize: 12, textTransform: "uppercase", letterSpacing: 0.2, marginBottom: 6 }}>Decoration library</div>
-            {decorationCatalog.map((group) => (
-              <div key={group.category} style={{ marginBottom: 8 }}>
-                <div style={{ fontSize: 12, opacity: 0.82, marginBottom: 4 }}>{group.category}</div>
-                <div style={{ display: "flex", flexWrap: "wrap", gap: 6 }}>
-                  {group.items.map((item) => (
-                    <button key={item} onClick={() => addDecoration(item)} style={chipStyle(config)}>{item}</button>
-                  ))}
-                </div>
-              </div>
-            ))}
-          </div>
-
-          <div style={{ marginTop: 12, borderRadius: 18, padding: 10, border: "1px solid " + config.borderColor, background: "rgba(255,255,255,0.04)" }}>
-            <div style={{ fontSize: 12, textTransform: "uppercase", letterSpacing: 0.2, marginBottom: 6 }}>Live preview</div>
-            <div style={{ position: "relative", minHeight: 140, borderRadius: 18, border: "1px dashed " + config.borderColor, background: liveBackground, overflow: "hidden" }}>
-              {decorations.map((item) => (
-                <div key={item.id} onMouseDown={(event) => handlePointerDown(event, item)} style={{ position: "absolute", left: item.x, top: item.y, cursor: "grab", transform: "rotate(" + item.rotate + "deg)", padding: "6px 8px", borderRadius: 12, background: "rgba(255,255,255,0.82)", color: "#111", border: "1px solid rgba(0,0,0,0.08)", boxShadow: "0 10px 30px rgba(0,0,0,0.15)", userSelect: "none" }}>
-                  {item.emoji} <button onClick={() => removeDecoration(item.id)} style={{ marginLeft: 6, border: "none", background: "transparent", color: "#111", fontWeight: 700 }}>×</button>
-                </div>
-              ))}
-            </div>
-          </div>
-
-          <div style={{ marginTop: 12, display: "grid", gap: 8 }}>
-            <input value={profileName} onChange={(e) => setProfileName(e.target.value)} style={{ width: "100%", borderRadius: 12, border: "1px solid " + config.borderColor, background: "rgba(255,255,255,0.04)", color: config.textColor, padding: "10px 12px" }} />
-            <div style={{ display: "flex", gap: 8, flexWrap: "wrap" }}>
-              <button onClick={saveProfile} style={chipStyle(config)}>Save profile</button>
-              <button onClick={() => setConfig({ ...defaultConfig })} style={chipStyle(config)}>Reset</button>
-              <button onClick={exportProfile} style={chipStyle(config)}>Export</button>
-              <label style={chipStyle(config)}>
-                Import
-                <input type="file" accept="application/json" onChange={importProfile} style={{ display: "none" }} />
-              </label>
-            </div>
-            <div style={{ display: "grid", gap: 4 }}>
-              {profiles.map((entry) => (
-                <button key={entry.name} onClick={() => loadProfile(entry)} style={{ textAlign: "left", padding: "8px 10px", borderRadius: 12, background: "rgba(255,255,255,0.05)", border: "1px solid " + config.borderColor, color: config.textColor }}>
-                  {entry.name}
+      {/* DECORATIONS */}
+      <div style={{ marginBottom: 14 }}>
+        <p style={{ fontSize: 11, textTransform: "uppercase", letterSpacing: "0.2em", opacity: 0.5, margin: "0 0 8px" }}>Decorations</p>
+        {decorationCatalog.map((group) => (
+          <div key={group.category} style={{ marginBottom: 8 }}>
+            <p style={{ fontSize: 11, opacity: 0.6, margin: "0 0 6px" }}>{group.category}</p>
+            <div style={{ display: "flex", flexWrap: "wrap", gap: 5 }}>
+              {group.items.map((item) => (
+                <button key={item} onClick={() => addDecoration(item)} style={{ borderRadius: 999, border: "1px solid " + config.borderColor, background: "rgba(255,255,255,0.04)", color: config.textColor, padding: "6px 10px", cursor: "pointer", fontSize: 11 }}>
+                  {item}
                 </button>
               ))}
             </div>
           </div>
-        </aside>
-      )}
-    </>
-  );
-}
+        ))}
+      </div>
 
-function chipStyle(config: StudioConfig) {
-  return {
-    borderRadius: 999,
-    border: "1px solid " + config.borderColor,
-    background: "rgba(255,255,255,0.05)",
-    color: config.textColor,
-    padding: "8px 10px",
-    cursor: "pointer",
-    fontSize: 12,
-  } as const;
+      {/* LIVE PREVIEW */}
+      <div style={{ marginBottom: 14 }}>
+        <p style={{ fontSize: 11, textTransform: "uppercase", letterSpacing: "0.2em", opacity: 0.5, margin: "0 0 8px" }}>Preview</p>
+        <div style={{ position: "relative", minHeight: 120, borderRadius: 14, border: "1px dashed " + config.borderColor, background: liveBackground, overflow: "hidden" }}>
+          {decorations.map((item) => (
+            <div key={item.id} onMouseDown={(e) => handlePointerDown(e, item)} style={{ position: "absolute", left: item.x, top: item.y, cursor: "grab", transform: "rotate(" + item.rotate + "deg)", padding: "5px 7px", borderRadius: 10, background: "rgba(255,255,255,0.82)", color: "#111", userSelect: "none", fontSize: 14 }}>
+              {item.emoji}
+              <button onClick={() => removeDecoration(item.id)} style={{ marginLeft: 4, border: "none", background: "transparent", color: "#111", fontWeight: 700, cursor: "pointer", fontSize: 11 }}>×</button>
+            </div>
+          ))}
+        </div>
+      </div>
+
+      {/* SAVE / LOAD */}
+      <div>
+        <p style={{ fontSize: 11, textTransform: "uppercase", letterSpacing: "0.2em", opacity: 0.5, margin: "0 0 8px" }}>Profiles</p>
+        <input value={profileName} onChange={(e) => setProfileName(e.target.value)} style={{ width: "100%", borderRadius: 10, border: "1px solid " + config.borderColor, background: "rgba(255,255,255,0.04)", color: config.textColor, padding: "9px 12px", fontSize: 13, marginBottom: 8 }} placeholder="Profile name" />
+        <div style={{ display: "flex", gap: 6, marginBottom: 8 }}>
+          <button onClick={saveProfile} style={{ flex: 1, borderRadius: 999, border: "1px solid " + config.borderColor, background: "rgba(255,255,255,0.05)", color: config.textColor, padding: "8px", cursor: "pointer", fontSize: 12 }}>Save</button>
+          <button onClick={() => setConfig({ ...defaultConfig })} style={{ flex: 1, borderRadius: 999, border: "1px solid " + config.borderColor, background: "rgba(255,255,255,0.05)", color: config.textColor, padding: "8px", cursor: "pointer", fontSize: 12 }}>Reset</button>
+        </div>
+        {profiles.map((entry) => (
+          <button key={entry.name} onClick={() => loadProfile(entry)} style={{ display: "block", width: "100%", textAlign: "left", padding: "8px 10px", borderRadius: 10, background: "rgba(255,255,255,0.04)", border: "1px solid " + config.borderColor, color: config.textColor, cursor: "pointer", fontSize: 12, marginBottom: 4 }}>
+            {entry.name}
+          </button>
+        ))}
+      </div>
+    </aside>
+  );
 }
